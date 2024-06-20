@@ -19,6 +19,24 @@
     </style>
 </head>
 <body>
-    <iframe src="https://fenixis.co/"></iframe>
+    <iframe id="miIframe" src="https://fenixis.co/"></iframe>
+
+    <script>
+        document.getElementById('miIframe').addEventListener('load', function() {
+            var iframe = document.getElementById('miIframe');
+            var lastLocation = iframe.contentWindow.location.href;
+
+            setInterval(function() {
+                var currentLocation = iframe.contentWindow.location.href;
+                if (currentLocation !== lastLocation) {
+                    // Detectamos un redireccionamiento
+                    console.log('Redireccionamiento detectado: ', currentLocation);
+                    lastLocation = currentLocation;
+                    // Aquí puedes manejar el redireccionamiento, por ejemplo:
+                    window.location.href = currentLocation;
+                }
+            }, 1000); // Revisa cada segundo
+        });
+    </script>
 </body>
 </html>
