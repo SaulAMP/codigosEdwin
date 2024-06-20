@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>edwauge.vip</title>
+    <title>Página Embevida con Redireccionamiento</title>
     <style>
         body, html {
             margin: 0;
@@ -19,20 +19,30 @@
     </style>
 </head>
 <body>
-    <iframe id="myIframe" src="https://fenixis.co/" onload="handleRedirection()"></iframe>
+    <iframe id="myIframe" src="https://fenixis.co/"></iframe>
 
     <script>
-        function handleRedirection() {
+        document.getElementById('myIframe').onload = function() {
             const iframe = document.getElementById('myIframe');
-            iframe.contentWindow.addEventListener('unload', () => {
-                setTimeout(() => {
-                    const newSrc = iframe.contentWindow.location.href;
-                    if (newSrc !== iframe.src) {
-                        iframe.src = newSrc;
+            
+            const checkRedirection = () => {
+                try {
+                    // Intentar acceder a la ubicación del iframe
+                    const iframeLocation = iframe.contentWindow.location.href;
+
+                    // Si la URL ha cambiado, abrir en una nueva pestaña
+                    if (iframeLocation !== iframe.src) {
+                        window.open(iframeLocation, '_blank');
+                        iframe.src = iframeLocation; // Actualizar el src del iframe
                     }
-                }, 100); // Ajusta el tiempo según sea necesario
-            });
-        }
+                } catch (e) {
+                    // Si se produce un error, probablemente debido a restricciones de seguridad
+                    console.error('Error al acceder a la ubicación del iframe:', e);
+                }
+            };
+
+            setInterval(checkRedirection, 1000); // Comprobar la redirección cada segundo
+        };
     </script>
 </body>
 </html>
