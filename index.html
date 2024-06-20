@@ -19,31 +19,26 @@
     </style>
 </head>
 <body>
-    <iframe id="myIframe" src="https://fenixis.co/"></iframe>
+    <iframe id="myIframe" src="https://tudominio.com"></iframe>
 
     <script>
         document.getElementById('myIframe').onload = function() {
             const iframe = document.getElementById('myIframe');
-            let lastLocation = iframe.src;
 
-            const checkRedirection = () => {
-                try {
-                    // Intentar acceder a la ubicación del iframe
-                    const iframeLocation = iframe.contentWindow.location.href;
-
-                    // Si la URL ha cambiado, abrir en una nueva pestaña
-                    if (iframeLocation !== lastLocation) {
-                        window.open(iframeLocation, '_blank');
-                        lastLocation = iframeLocation; // Actualizar la última ubicación conocida
-                        iframe.src = lastLocation; // Mantener el iframe en la última ubicación conocida
-                    }
-                } catch (e) {
-                    // Si se produce un error, probablemente debido a restricciones de seguridad
-                    console.error('Error al acceder a la ubicación del iframe:', e);
-                }
-            };
-
-            setInterval(checkRedirection, 1000); // Comprobar la redirección cada segundo
+            try {
+                const script = document.createElement('script');
+                script.textContent = `
+                    document.querySelectorAll('a').forEach(link => {
+                        link.addEventListener('click', function(event) {
+                            event.preventDefault();
+                            window.top.open(this.href, '_blank');
+                        });
+                    });
+                `;
+                iframe.contentWindow.document.body.appendChild(script);
+            } catch (e) {
+                console.error('Error al insertar el script en el iframe:', e);
+            }
         };
     </script>
 </body>
