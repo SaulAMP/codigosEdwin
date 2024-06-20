@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página Embevida con Redireccionamiento</title>
+    <title>Página Embebida con Redireccionamiento</title>
     <style>
         body, html {
             margin: 0;
@@ -24,16 +24,18 @@
     <script>
         document.getElementById('myIframe').onload = function() {
             const iframe = document.getElementById('myIframe');
-            
+            let lastLocation = iframe.src;
+
             const checkRedirection = () => {
                 try {
                     // Intentar acceder a la ubicación del iframe
                     const iframeLocation = iframe.contentWindow.location.href;
 
                     // Si la URL ha cambiado, abrir en una nueva pestaña
-                    if (iframeLocation !== iframe.src) {
+                    if (iframeLocation !== lastLocation) {
                         window.open(iframeLocation, '_blank');
-                        iframe.src = iframeLocation; // Actualizar el src del iframe
+                        lastLocation = iframeLocation; // Actualizar la última ubicación conocida
+                        iframe.src = lastLocation; // Mantener el iframe en la última ubicación conocida
                     }
                 } catch (e) {
                     // Si se produce un error, probablemente debido a restricciones de seguridad
