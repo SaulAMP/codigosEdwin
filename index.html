@@ -19,24 +19,20 @@
     </style>
 </head>
 <body>
-    <iframe id="miIframe" src="https://fenixis.co/"></iframe>
+    <iframe id="myIframe" src="https://fenixis.co/" onload="handleRedirection()"></iframe>
 
     <script>
-        document.getElementById('miIframe').addEventListener('load', function() {
-            var iframe = document.getElementById('miIframe');
-            var lastLocation = iframe.contentWindow.location.href;
-
-            setInterval(function() {
-                var currentLocation = iframe.contentWindow.location.href;
-                if (currentLocation !== lastLocation) {
-                    // Detectamos un redireccionamiento
-                    console.log('Redireccionamiento detectado: ', currentLocation);
-                    lastLocation = currentLocation;
-                    // Aquí puedes manejar el redireccionamiento, por ejemplo:
-                    window.location.href = currentLocation;
-                }
-            }, 1000); // Revisa cada segundo
-        });
+        function handleRedirection() {
+            const iframe = document.getElementById('myIframe');
+            iframe.contentWindow.addEventListener('unload', () => {
+                setTimeout(() => {
+                    const newSrc = iframe.contentWindow.location.href;
+                    if (newSrc !== iframe.src) {
+                        iframe.src = newSrc;
+                    }
+                }, 100); // Ajusta el tiempo según sea necesario
+            });
+        }
     </script>
 </body>
 </html>
