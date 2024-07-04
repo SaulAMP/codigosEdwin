@@ -1,1 +1,34 @@
-<!DOCTYPE html><html><head><title>Incrustar Página con Enlaces en Nueva Pestaña</title></head><body><h1>Mi Página</h1><iframe id="myIframe" src="https://fenixis.co" width="1000" height="1000"></iframe><script> document.getElementById('myIframe').onload = function() { var iframe = document.getElementById('myIframe').contentWindow; var links = iframe.document.getElementsByTagName('a'); for (var i = 0; i < links.length; i++) { links[i].setAttribute('target', '_blank'); } }; </script></body></html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Incrustar Página con Enlaces en Nueva Pestaña</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Mi Página</h1>
+    <iframe id="myIframe" src="https://fenixis.co"></iframe>
+    <script>
+        document.getElementById('myIframe').onload = function() {
+            var iframe = document.getElementById('myIframe').contentWindow;
+            var links = iframe.document.getElementsByTagName('a');
+            for (var i = 0; i < links.length; i++) {
+                links[i].setAttribute('target', '_blank');
+            }
+        };
+    </script>
+</body>
+</html>
